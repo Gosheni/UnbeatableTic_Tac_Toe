@@ -81,7 +81,6 @@ public class Tic_Tac_Toe {
         System.out.println("Welcome to 3x3 Tic Tac Toe.");
 		board.print_board();
 
-
         while (winner == null) {
             System.out.println ("Player's turn; enter a slot number (1-9) to place X in:");
 			int numInput;
@@ -102,8 +101,8 @@ public class Tic_Tac_Toe {
 			// Here is the logic to decide the turn.
 			if (board.board[(numInput-1)/3][(numInput-1)%3].equals(pieces.E)) {
 				board.board[(numInput-1)/3][(numInput-1)%3] = pieces.X;
-
-				int[] bestMoves = game.findBestMove();
+				
+                int[] bestMoves = game.findBestMove();
                 if (bestMoves == null) {
                     winner = pieces.E;
                     break;
@@ -123,7 +122,6 @@ public class Tic_Tac_Toe {
 		} else {
 			System.out.println("Congratulations! " + winner + " have won! Thanks for playing.");
 		}
-
         in.close();
     }
 }
