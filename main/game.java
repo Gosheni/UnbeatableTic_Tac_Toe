@@ -17,7 +17,7 @@ public class game {
     public boolean moveIsLeft() {
         for (pieces[] line : board.board) {
             for (pieces p : line) {
-                if (p == pieces.Empty) {
+                if (p == pieces.E) {
                     return true;
                 }
             }
@@ -34,13 +34,13 @@ public class game {
     }
 
     public int find_score(int turns) {
-        pieces type = pieces.Empty;
+        pieces type = pieces.E;
         int row = 0, col = 0;
 
         //Iterate through rows to see if there's victory
         for (row = 0; row < board.get_num_rows(); row++) {
             type = board.board[row][0];
-            if (type == pieces.Empty) continue;
+            if (type == pieces.E) continue;
             for (col = 0; col < board.get_num_cols(); col++) {
                 if(type != board.board[row][col]) break;
             }
@@ -53,7 +53,7 @@ public class game {
         //Iterate through cols to see if there's victory
         for (col = 0; col < board.get_num_cols(); col++) {
             type = board.board[0][col];
-            if (type == pieces.Empty) continue;
+            if (type == pieces.E) continue;
             for(row = 0;row < board.get_num_rows(); row++) {
                 if(type != board.board[row][col]) break;
             }
@@ -65,7 +65,7 @@ public class game {
 
         //Iterate through diagonals to see if there's victory
         type = board.board[0][0];
-        if (type != pieces.Empty) {
+        if (type != pieces.E) {
             for(row = 0; row < board.get_num_rows(); row++) {
                 if(type != board.board[row][row]) break;
             }
@@ -77,7 +77,7 @@ public class game {
         row = 0;
         col = board.get_num_cols()-1;
         type = board.board[row][col];
-        if (type != pieces.Empty) {
+        if (type != pieces.E) {
             while (row < board.get_num_rows()) {
                 if (type != board.board[row][col]) break;
                 row++;
@@ -108,14 +108,14 @@ public class game {
             for (int i = 0; i < board.get_num_rows(); i++) {
                 for (int j = 0; j< board.get_num_cols(); j++) {
                     //If cell is empty, make the move
-                    if (board.board[i][j] == pieces.Empty) {
+                    if (board.board[i][j] == pieces.E) {
                         board.board[i][j] = player1.get_type();
 
                         //Call minimax recursively and choose the max score
                         best = Math.max(best, minimax(!isMax, turns+1));
 
                         //Reset
-                        board.board[i][j] = pieces.Empty;
+                        board.board[i][j] = pieces.E;
                     }
                 }
             }
@@ -130,14 +130,14 @@ public class game {
             for (int i = 0; i < board.get_num_rows(); i++) {
                 for (int j = 0; j< board.get_num_cols(); j++) {
                     //If cell is empty, make the move
-                    if (board.board[i][j] == pieces.Empty) {
+                    if (board.board[i][j] == pieces.E) {
                         board.board[i][j] = player2.get_type();
 
                         //Call minimax recursively and choose the max score
                         best = Math.min(best, minimax(!isMax, turns+1));
 
                         //Reset
-                        board.board[i][j] = pieces.Empty;
+                        board.board[i][j] = pieces.E;
                     }
                 }
             }
@@ -153,13 +153,13 @@ public class game {
         // Return the cell with the best score
         for (int i = 0; i < board.get_num_rows(); i++) {
             for (int j = 0; j < board.get_num_cols(); j++) {
-                if (board.board[i][j] == pieces.Empty) {
+                if (board.board[i][j] == pieces.E) {
                     board.board[i][j] = player1.get_type();
 
                     //Find the score of current move
                     int moveVal = minimax(false,0);
                     //Reset
-                    board.board[i][j] = pieces.Empty;
+                    board.board[i][j] = pieces.E;
 
                     // If the current move's score is bigger than the best score, modify the values
                     if (moveVal > bestScore) {
