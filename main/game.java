@@ -5,13 +5,11 @@ import main.piece_types.pieces;
 public class game {
     public board board;
     public player player1, player2;
-    private boolean P1_turn;
 
     public game(board b, player p1, player p2) {
         board = b;
         player1 = p1;
         player2 = p2;
-        P1_turn = true;
     }
 
     public boolean moveIsLeft() {
@@ -23,14 +21,6 @@ public class game {
             }
         }
         return false;
-    }
-
-    public boolean get_P1_turn() {
-        return P1_turn;
-    }
-
-    public void set_P1_turn(boolean p) {
-        P1_turn = p;
     }
 
     public int find_score(int turns) {
@@ -98,7 +88,7 @@ public class game {
         if (score != 0) return score;
 
         //If it's a tie with no moves left, return 0
-        if (!moveIsLeft()) return 0;
+        if (score == -11) return 0;
 
         //For maximizer's move
         if (isMax) {
@@ -146,8 +136,10 @@ public class game {
     }
 
     public int[] findBestMove() {
+        if (!moveIsLeft()) return null;
+
         int bestScore = Integer.MIN_VALUE;
-        int[] bestMove = new int[]{-1, -1, bestScore};
+        int[] bestMove = new int[]{-1, -1, -1};
 
         // Go through all cells, evalutae minimax function on all empty cells.
         // Return the cell with the best score
@@ -171,7 +163,8 @@ public class game {
                 }
             }
         }
-        System.out.println("Best move is " + bestMove[0] + "," +bestMove[1] + " with a score of " + bestScore);
+
+        System.out.println("AI's Best move is " + bestMove[0] + "," +bestMove[1] + " with a score of " + bestScore);
         return bestMove;
     }
 }
